@@ -1,95 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yoko Nakamura</title>
 
-  <title>Yoko Nakamura</title>
-  <meta name="description" content="Personal site for Yoko Nakamura" />
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;800&display=swap" rel="stylesheet">
 
-  <!-- Basic reset -->
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #000;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+}
 
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-      color: #111;
-      background: #fff;
-      line-height: 1.5;
-    }
+/* Click-toggle checkbox */
+input.toggle {
+  position: fixed;
+  inset: 0;
+  opacity: 0;
+  z-index: 999;
+  cursor: pointer;
+}
 
-    .page {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
+/* Layout */
+.container {
+  max-width: 800px;
+  padding: 80px 100px;
+}
 
-    .hero {
-      display: flex;
-      align-items: center;
-      gap: 40px;
-      margin-bottom: 60px;
-    }
+@media (max-width: 768px) {
+  .container {
+    padding: 40px 15px;
+  }
+}
 
-    .hero img {
-      width: 240px;
-      height: auto;
-      border-radius: 4px;
-    }
+/* Fixed image */
+.fixed-image {
+  position: fixed;
+  top: 40px;
+  right: 60px;
+}
 
-    .hero-text h1 {
-      font-size: 42px;
-      margin: 0 0 12px 0;
-      font-weight: 600;
-    }
+.fixed-image img {
+  height: 160px;
+}
 
-    .hero-text p {
-      font-size: 18px;
-      margin: 0;
-      max-width: 460px;
-    }
+@media (max-width: 768px) {
+  .fixed-image {
+    position: static;
+    margin-bottom: 20px;
+  }
+  .fixed-image img {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+  }
+}
 
-    /* Mobile */
-    @media (max-width: 768px) {
-      .hero {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 24px;
-      }
+/* Typography */
+.top {
+  font-size: 70px;
+  font-weight: 700;
+  margin: 40px 0 30px;
+}
 
-      .hero img {
-        width: 100%;
-        max-width: 360px;
-      }
+.jp-top {
+  font-size: 50px;
+  font-weight: 800;
+  font-family: "M PLUS 1p", sans-serif;
+  margin: 40px 0 30px;
+}
 
-      .hero-text h1 {
-        font-size: 32px;
-      }
-    }
-  </style>
+@media (max-width: 768px) {
+  .top {
+    font-size: 55px;
+    margin-top: 10px;
+  }
+}
+
+.main {
+  font-size: 22px;
+  line-height: 29px;
+}
+
+.jp-main {
+  font-size: 20px;
+  line-height: 30px;
+  font-family: "M PLUS 1p", sans-serif;
+}
+
+.bold {
+  font-size: 32px;
+  margin-top: 40px;
+}
+
+/* Language hint */
+.hint {
+  color: #cb5464;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+/* Logos */
+.logo {
+  display: block;
+  margin-top: 80px;
+  width: 120px;
+}
+
+/* Toggle logic */
+.jp {
+  display: none;
+}
+
+input.toggle:checked ~ .en {
+  display: none;
+}
+
+input.toggle:checked ~ .jp {
+  display: block;
+}
+</style>
 </head>
+
 <body>
 
-  <main class="page">
+<input class="toggle" type="checkbox">
 
-    <section class="hero">
-      <!-- TEMP IMAGE PLACEHOLDER -->
-      <img src="https://via.placeholder.com/600x800?text=Your+Image+Here" alt="Portrait placeholder" />
+<div class="fixed-image">
+  <!-- TEMP PORTRAIT PLACEHOLDER -->
+  <img src="https://via.placeholder.com/300x450?text=Portrait+Image" alt="Portrait">
+</div>
 
-      <div class="hero-text">
-        <h1>Hi! I’m Yoko.</h1>
-        <p>
-          I’m a Tokyo-based creative working across photography, visual storytelling,
-          and personal projects. This site is a simple home for my work and experiments.
-        </p>
-      </div>
-    </section>
+<!-- ENGLISH -->
+<div class="container en">
+  <div class="hint">Click anywhere to view 日本語</div>
 
-  </main>
+  <p class="top">Hi, I'm Yoko.</p>
+
+  <p class="main">
+    I'm a freelance translator with over 30 years of experience providing Japanese/English
+    interpretation and translation services for various industries including semiconductor,
+    medical, law, art, real estate and architecture.
+    <br><br>
+    Available for technical meetings, business meetings, seminars, education,
+    training, presentations and more.
+  </p>
+
+  <p class="bold">
+    Feel free to say<br>
+    <b>hello</b>@<b>y-o-k-o.com</b>
+  </p>
+
+  <!-- TEMP LOGO PLACEHOLDER -->
+  <img class="logo" src="https://via.placeholder.com/240x120?text=Logo" alt="Logo">
+</div>
+
+<!-- JAPANESE -->
+<div class="container jp">
+  <div class="hint">Click anywhere to view English</div>
+
+  <p class="jp-top">こんにちは！</p>
+
+  <p class="jp-main">
+    中村洋子と申します。<br><br>
+    私は、フリーランスの日英通訳・翻訳を30年以上続けてまいりました。
+    専門分野は、主に半導体、医療、法律、芸術、不動産、建築ですが、
+    その他幅広い分野のご要望にお応えできると思います。<br><br>
+    技術会議、ビジネス会議、セミナー、教育、トレーニング、
+    プレゼンテーション等、お客様の目的に合わせた
+    サービスを提供させていただきます。<br><br>
+    是非お気軽にご連絡ください。
+  </p>
+
+  <p class="bold">
+    メール:<br>
+    <b>hello</b>@<b>y-o-k-o.com</b>
+  </p>
+
+  <!-- TEMP LOGO PLACEHOLDER -->
+  <img class="logo" src="https://via.placeholder.com/240x120?text=Logo" alt="Logo">
+</div>
 
 </body>
 </html>
