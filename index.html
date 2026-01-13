@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Yoko Nakamura</title>
+  <meta name="description" content="Personal site for Yoko Nakamura" />
+
+  <!-- Basic reset -->
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #111;
+      background: #fff;
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .hero img {
+      width: 240px;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .hero-text h1 {
+      font-size: 42px;
+      margin: 0 0 12px 0;
+      font-weight: 600;
+    }
+
+    .hero-text p {
+      font-size: 18px;
+      margin: 0;
+      max-width: 460px;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+      }
+
+      .hero img {
+        width: 100%;
+        max-width: 360px;
+      }
+
+      .hero-text h1 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="page">
+
+    <section class="hero">
+      <!-- TEMP IMAGE PLACEHOLDER -->
+      <img src="https://via.placeholder.com/600x800?text=Your+Image+Here" alt="Portrait placeholder" />
+
+      <div class="hero-text">
+        <h1>Hi! I’m Yoko.</h1>
+        <p>
+          I’m a Tokyo-based creative working across photography, visual storytelling,
+          and personal projects. This site is a simple home for my work and experiments.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
