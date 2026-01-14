@@ -17,7 +17,6 @@ body {
   background: #fff;
   color: #000;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  transition: background 0.6s ease, color 0.6s ease;
   overflow-x: hidden;
 }
 
@@ -26,7 +25,7 @@ input.toggle {
   position: fixed;
   inset: 0;
   opacity: 0;
-  z-index: 100; /* Ensure it stays on top */
+  z-index: 100;
   cursor: pointer;
 }
 
@@ -35,7 +34,6 @@ input.toggle {
   position: fixed;
   top: 40px;
   right: 60px;
-  transition: filter 0.6s ease;
   z-index: 5;
 }
 
@@ -55,16 +53,16 @@ input.toggle {
   height: auto;
 }
 
-/* CONTAINER */
+/* CONTAINER - Wider for longer lines */
 .container {
-  max-width: 800px;
+  max-width: 1000px; /* Increased from 800px */
   padding: 80px 100px;
   position: relative;
 }
 
 @media (max-width: 768px) {
   .container {
-    padding: 40px 18px;
+    padding: 40px 24px;
   }
   .fixed-image {
     display: none;
@@ -87,11 +85,11 @@ input.toggle {
   width: 100%;
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  pointer-events: none; /* Let clicks pass through to the checkbox */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
 }
 
-/* INITIAL STATE: ENGLISH VISIBLE */
+/* INITIAL STATE: ENGLISH */
 .content.en {
   opacity: 1;
   transform: translateY(0);
@@ -99,14 +97,12 @@ input.toggle {
 }
 
 /* TOGGLE STATES */
-/* Hide English when checked */
 input.toggle:checked ~ .site .en {
   opacity: 0;
   transform: translateY(-10px);
   pointer-events: none;
 }
 
-/* Show Japanese when checked */
 input.toggle:checked ~ .site .jp {
   opacity: 1;
   transform: translateY(0);
@@ -117,18 +113,6 @@ input.toggle:checked ~ .site .jp {
   background: #fff;
   color: #000;
   min-height: 100vh;
-  transition: background 0.6s ease, color 0.6s ease;
-}
-
-/* JAPANESE MODE THEME */
-input.toggle:checked ~ .site {
-  background: #000;
-  color: #fff;
-}
-
-/* Invert images in JP mode */
-input.toggle:checked ~ .site img {
-  filter: invert(1);
 }
 
 /* TYPOGRAPHY */
@@ -154,12 +138,12 @@ input.toggle:checked ~ .site img {
 
 .main {
   font-size: 22px;
-  line-height: 29px;
+  line-height: 1.5;
 }
 
 .jp-main {
   font-size: 20px;
-  line-height: 30px;
+  line-height: 1.8;
   font-family: "M PLUS 1p", sans-serif;
 }
 
@@ -168,11 +152,14 @@ input.toggle:checked ~ .site img {
   margin-top: 40px;
 }
 
-/* HINT TEXT */
+/* HINT TEXT - Now Black */
 .hint {
   font-size: 13px;
-  color: #cb5464;
+  color: #000;
   margin-bottom: 10px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  opacity: 0.6;
 }
 
 .hint-mobile {
@@ -210,8 +197,8 @@ input.toggle:checked ~ .site img {
     <div class="content-wrapper">
 
       <div class="content en">
-        <div class="hint hint-desktop">画面をクリックで日本語</div>
-        <div class="hint hint-mobile">画面をタッチで日本語</div>
+        <div class="hint hint-desktop">Click anywhere for Japanese</div>
+        <div class="hint hint-mobile">Tap anywhere for Japanese</div>
 
         <div class="mobile-portrait">
           <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko">
@@ -229,32 +216,26 @@ input.toggle:checked ~ .site img {
         </p>
 
         <p class="bold">
-          Feel free to say<br>
-          <b>hello</b>@<b>y-o-k-o.com</b>
+          Feel free to say <b>hello</b>@<b>y-o-k-o.com</b>
         </p>
 
         <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Logo">
       </div>
 
       <div class="content jp">
-        <div class="hint hint-desktop">Click the screen for English</div>
+        <div class="hint hint-desktop">Click for English</div>
         <div class="hint hint-mobile">Tap for English</div>
 
         <div class="mobile-portrait">
           <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko">
         </div>
 
-        <p class="jp-top">こんにちは！</p>
+        <p class="jp-top">こんにちは、中村です。</p>
 
         <p class="jp-main">
-         中村洋子と申します。<br><br>
-    私は、フリーランスの日英通訳・翻訳を30年以上続けてまいりました。
-    専門分野は、主に半導体、医療、法律、芸術、不動産、建築ですが、
-    その他幅広い分野のご要望にお応えできると思います。<br><br>
-    技術会議、ビジネス会議、セミナー、教育、トレーニング、
-    プレゼンテーション等、お客様の目的に合わせた
-    サービスを提供させていただきます。<br><br>
-    是非お気軽にご連絡ください。
+          フリーランスの日英通訳・翻訳者として30年以上の実績があり、半導体、医療、法律、芸術、不動産、建築など多岐にわたる分野でサービスを提供してまいりました。
+          <br><br>
+          技術会議、ビジネス商談、セミナー、教育研修、プレゼンテーションなど、お客様のニーズに合わせた柔軟な対応が可能です。
         </p>
 
         <p class="bold">
@@ -267,5 +248,6 @@ input.toggle:checked ~ .site img {
 
     </div>
   </div>
-</div> </body>
+</div>
+</body>
 </html>
