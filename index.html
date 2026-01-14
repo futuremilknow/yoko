@@ -3,14 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yoko Nakamura</title>
-  
-<meta property="og:title" content="Yoko Nakamura">
-<meta property="og:description" content="Japanese/English interpretation and translation services with over 30 years of experience.">
+<title>Yoko Nakamura | Japanese English Translator & Interpreter</title>
+
+<meta name="description" content="Japanese/English interpretation and translation services by Yoko Nakamura. 30+ years of experience in semiconductor, medical, legal, and art sectors.">
+<meta name="keywords" content="Japanese translator, English interpreter, freelance translation, technical Japanese translation, Yoko Nakamura">
+<link rel="alternate" hreflang="en" href="https://y-o-k-o.com/" />
+<link rel="alternate" hreflang="ja" href="https://y-o-k-o.com/" />
+<link rel="alternate" hreflang="x-default" href="https://y-o-k-o.com/" />
+
+<meta property="og:title" content="Yoko Nakamura | Japanese English Translator">
+<meta property="og:description" content="Japanese/English translation services with over 30 years of experience.">
 <meta property="og:image" content="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png">
 <meta property="og:url" content="https://y-o-k-o.com">
 <meta property="og:type" content="website">
-  
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Yoko Nakamura | Japanese English Translator">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png">
+
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;800&display=swap" rel="stylesheet">
 
 <style>
@@ -32,7 +42,7 @@ body {
   position: fixed;
   width: 40px;
   height: 40px;
-  background-color: #fff; /* Initial color for overlay */
+  background-color: #fff; 
   border-radius: 50%;
   pointer-events: none;
   z-index: 999;
@@ -51,7 +61,6 @@ body {
   100% { background-color: #ff0000; }
 }
 
-/* Apply rainbow only after overlay is gone */
 body.rainbow-active #custom-cursor {
   animation: rainbowCycle 8s linear infinite;
 }
@@ -226,6 +235,7 @@ input.toggle:checked ~ .site .jp {
 .top, .jp-top {
   margin-top: 0;
   margin-bottom: 30px;
+  display: block;
 }
 
 .top {
@@ -245,7 +255,7 @@ input.toggle:checked ~ .site .jp {
     margin-top: 10px;
   }
   .jp-top {
-    font-size: 50px;
+    font-size: 58px;
     margin-top: 10px;
   }
 }
@@ -257,7 +267,7 @@ input.toggle:checked ~ .site .jp {
 
 .jp-main {
   font-size: 20px;
-  line-height: 1.8;
+  line-height: 1.5;
   font-family: "M PLUS 1p", sans-serif;
 }
 
@@ -297,20 +307,20 @@ input.toggle:checked ~ .site .jp {
   </div>
 </div>
 
-<input class="toggle" type="checkbox">
+<input class="toggle" type="checkbox" aria-label="Toggle language">
 
 <div class="site">
   <div class="fixed-image">
-    <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko">
+    <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko Nakamura - Freelance Japanese English Translator">
   </div>
 
   <div class="container">
     <div class="content-wrapper">
       <div class="content en">
         <div class="mobile-portrait">
-          <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko">
+          <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko Nakamura">
         </div>
-        <p class="top">Hi, I'm Yoko.</p>
+        <h1 class="top">Hi, I'm Yoko.</h1>
         <p class="main">
           I'm a freelance translator with over 30 years of experience providing Japanese/English
           interpretation and translation services for various industries including semiconductor,
@@ -319,28 +329,28 @@ input.toggle:checked ~ .site .jp {
           Available for technical meetings, business meetings, seminars, education,
           training, presentations and more.
         </p>
-        <p class="bold">
+        <h3 class="bold">
           Feel free to say <b>hello</b>@<b>y-o-k-o.com</b>
-        </p>
-        <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Logo">
+        </h3>
+        <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Yoko Nakamura Logo">
       </div>
 
       <div class="content jp">
         <div class="mobile-portrait">
-          <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko">
+          <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko Nakamura">
         </div>
-        <p class="jp-top">こんにちは！</p>
+        <h1 class="jp-top">こんにちは！</h1>
         <p class="jp-main">
           中村洋子と申します。<br><br>
           私は、フリーランスの日英通訳・翻訳を30年以上続けてまいりました。専門分野は、主に半導体、医療、法律、芸術、不動産、建築ですが、 その他幅広い分野のご要望にお応えできると思います。<br><br>
           技術会議、ビジネス会議、セミナー、教育、トレーニング、プレゼンテーション等、お客様の目的に合わせたサービスを提供させていただきます。<br><br>
           是非お気軽にご連絡ください。
         </p>
-        <p class="bold">
+        <h3 class="bold">
           メール：<br>
           <b>hello</b>@<b>y-o-k-o.com</b>
-        </p>
-        <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Logo">
+        </h3>
+        <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="ロゴ">
       </div>
     </div>
   </div>
@@ -354,7 +364,6 @@ input.toggle:checked ~ .site .jp {
     cursor.style.top = e.clientY + 'px';
   });
 
-  // Activate rainbow animation after overlay fades out
   setTimeout(() => {
     document.body.classList.add('rainbow-active');
   }, 3800);
