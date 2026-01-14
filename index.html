@@ -8,18 +8,17 @@
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;800&display=swap" rel="stylesheet">
 
 <style>
-/* RESET */
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  background: #ffffff;
+  background: #fff;
   color: #000;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  overflow-x: hidden;
   transition: background 0.6s ease, color 0.6s ease;
+  overflow-x: hidden;
 }
 
 /* CLICK TOGGLE */
@@ -27,23 +26,8 @@ input.toggle {
   position: fixed;
   inset: 0;
   opacity: 0;
-  z-index: 999;
+  z-index: 10;
   cursor: pointer;
-}
-
-/* LAYOUT */
-.container {
-  max-width: 800px;
-  padding: 80px 100px;
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-@media (max-width: 768px) {
-  .container {
-    padding: 40px 18px;
-  }
 }
 
 /* FIXED IMAGE (DESKTOP) */
@@ -58,19 +42,78 @@ input.toggle {
   height: 160px;
 }
 
-/* MOBILE IMAGE BEHAVIOR */
+/* MOBILE PORTRAIT */
+.mobile-portrait {
+  display: none;
+  margin: 10px 0 25px;
+}
+
+.mobile-portrait img {
+  max-width: 280px;
+  width: 100%;
+  height: auto;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 800px;
+  padding: 80px 100px;
+  position: relative;
+}
+
 @media (max-width: 768px) {
-  .fixed-image {
-    position: static;
-    margin: 15px 0 30px;
-    text-align: center;
+  .container {
+    padding: 40px 18px;
   }
 
-  .fixed-image img {
-    width: 100%;
-    max-width: 280px;
-    height: auto;
+  .fixed-image {
+    display: none;
   }
+
+  .mobile-portrait {
+    display: block;
+  }
+}
+
+/* CONTENT STACK */
+.content-wrapper {
+  position: relative;
+  min-height: 500px;
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.en {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* TOGGLE STATES */
+input.toggle:checked ~ .container .en {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+input.toggle:checked ~ .container .jp {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+input.toggle:checked ~ body {
+  background: #000;
+  color: #fff;
+}
+
+input.toggle:checked ~ .fixed-image,
+input.toggle:checked ~ .container img {
+  filter: invert(1);
 }
 
 /* TYPOGRAPHY */
@@ -110,73 +153,30 @@ input.toggle {
   margin-top: 40px;
 }
 
-/* LANGUAGE HINT */
+/* HINT TEXT */
 .hint {
-  color: #cb5464;
   font-size: 13px;
+  color: #cb5464;
   margin-bottom: 10px;
+}
+
+.hint-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hint-desktop {
+    display: none;
+  }
+  .hint-mobile {
+    display: block;
+  }
 }
 
 /* LOGO */
 .logo {
-  display: block;
   margin-top: 80px;
   width: 120px;
-  transition: filter 0.6s ease;
-}
-
-/* TOGGLE VISIBILITY */
-.jp {
-  display: none;
-}
-
-/* ANIMATION + COLOR SWITCH */
-input.toggle:checked ~ .en {
-  opacity: 0;
-  transform: translateY(10px);
-  pointer-events: none;
-}
-
-input.toggle:checked ~ .jp {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-input.toggle:checked ~ .fixed-image,
-input.toggle:checked ~ .jp .logo {
-  filter: invert(1);
-}
-
-input.toggle:checked ~ body,
-input.toggle:checked ~ .jp {
-  background: #000;
-  color: #fff;
-}
-
-/* BODY COLOR SWITCH */
-input.toggle:checked ~ .en,
-input.toggle:checked ~ .jp {
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-/* DARK MODE */
-input.toggle:checked ~ .jp {
-  color: #fff;
-}
-
-input.toggle:checked ~ .jp .hint {
-  color: #888;
-}
-
-/* BACKGROUND SWITCH */
-input.toggle:checked ~ .container,
-input.toggle:checked ~ .fixed-image {
-  transition: all 0.6s ease;
-}
-
-input.toggle:checked ~ body {
-  background: #000;
 }
 </style>
 </head>
@@ -189,52 +189,69 @@ input.toggle:checked ~ body {
   <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko-illo.png" alt="Yoko">
 </div>
 
-<!-- ENGLISH -->
-<div class="container en">
-  <div class="hint">画面をクリックで日本語</div>
+<div class="container">
 
-  <p class="top">Hi, I'm Yoko.</p>
+  <div class="content-wrapper">
 
-  <p class="main">
-    I'm a freelance translator with over 30 years of experience providing Japanese/English
-    interpretation and translation services for various industries including semiconductor,
-    medical, law, art, real estate and architecture.
-    <br><br>
-    Available for technical meetings, business meetings, seminars, education,
-    training, presentations and more.
-  </p>
+    <!-- ENGLISH -->
+    <div class="content en">
+      <div class="hint hint-desktop">画面をクリックで日本語</div>
+      <div class="hint hint-mobile">画面をタッチで日本語</div>
 
-  <p class="bold">
-    Feel free to say<br>
-    <b>hello</b>@<b>y-o-k-o.com</b>
-  </p>
+      <div class="mobile-portrait">
+        <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko-illo.png" alt="Yoko">
+      </div>
 
-  <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Logo">
-</div>
+      <p class="top">Hi, I'm Yoko.</p>
 
-<!-- JAPANESE -->
-<div class="container jp">
-  <div class="hint">Click the screen for English</div>
+      <p class="main">
+        I'm a freelance translator with over 30 years of experience providing Japanese/English
+        interpretation and translation services for various industries including semiconductor,
+        medical, law, art, real estate and architecture.
+        <br><br>
+        Available for technical meetings, business meetings, seminars, education,
+        training, presentations and more.
+      </p>
 
-  <p class="jp-top">こんにちは！</p>
+      <p class="bold">
+        Feel free to say<br>
+        <b>hello</b>@<b>y-o-k-o.com</b>
+      </p>
 
-  <p class="jp-main">
-    中村洋子と申します。<br><br>
-    私は、フリーランスの日英通訳・翻訳を30年以上続けてまいりました。
-    専門分野は、主に半導体、医療、法律、芸術、不動産、建築ですが、
-    その他幅広い分野のご要望にお応えできると思います。<br><br>
-    技術会議、ビジネス会議、セミナー、教育、トレーニング、
-    プレゼンテーション等、お客様の目的に合わせた
-    サービスを提供させていただきます。<br><br>
-    是非お気軽にご連絡ください。
-  </p>
+      <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Logo">
+    </div>
 
-  <p class="bold">
-    メール:<br>
-    <b>hello</b>@<b>y-o-k-o.com</b>
-  </p>
+    <!-- JAPANESE -->
+    <div class="content jp">
+      <div class="hint hint-desktop">Click the screen for English</div>
+      <div class="hint hint-mobile">Tap for English</div>
 
-  <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Logo">
+      <div class="mobile-portrait">
+        <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko-illo.png" alt="Yoko">
+      </div>
+
+      <p class="jp-top">こんにちは！</p>
+
+      <p class="jp-main">
+        中村洋子と申します。<br><br>
+        私は、フリーランスの日英通訳・翻訳を30年以上続けてまいりました。
+        専門分野は、主に半導体、医療、法律、芸術、不動産、建築ですが、
+        その他幅広い分野のご要望にお応えできると思います。<br><br>
+        技術会議、ビジネス会議、セミナー、教育、トレーニング、
+        プレゼンテーション等、お客様の目的に合わせた
+        サービスを提供させていただきます。<br><br>
+        是非お気軽にご連絡ください。
+      </p>
+
+      <p class="bold">
+        メール:<br>
+        <b>hello</b>@<b>y-o-k-o.com</b>
+      </p>
+
+      <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Logo">
+    </div>
+
+  </div>
 </div>
 
 </body>
