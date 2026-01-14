@@ -20,6 +20,43 @@ body {
   overflow-x: hidden;
 }
 
+/* --- INTRO OVERLAY --- */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.98);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none; /* Allows click to pass through to the toggle immediately */
+  animation: fadeOutOverlay 0.8s forwards;
+  animation-delay: 3s; /* Message stays for 3 seconds */
+}
+
+.intro-content {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #000;
+  border: 1px solid #000;
+  padding: 30px 50px;
+  border-radius: 60px;
+}
+
+/* Visibility Logic for Desktop/Mobile Hints */
+.intro-desktop {
+  display: block;
+}
+.intro-mobile {
+  display: none;
+}
+
+@keyframes fadeOutOverlay {
+  from { opacity: 1; }
+  to { opacity: 0; visibility: hidden; }
+}
+
 /* CLICK TOGGLE */
 input.toggle {
   position: fixed;
@@ -27,6 +64,8 @@ input.toggle {
   opacity: 0;
   z-index: 100;
   cursor: pointer;
+  width: 100vw;
+  height: 100vh;
 }
 
 /* FIXED IMAGE (DESKTOP) */
@@ -53,9 +92,9 @@ input.toggle {
   height: auto;
 }
 
-/* CONTAINER - Wider for longer lines */
+/* CONTAINER */
 .container {
-  max-width: 1000px; /* Increased from 800px */
+  max-width: 1000px;
   padding: 80px 100px;
   position: relative;
 }
@@ -68,6 +107,19 @@ input.toggle {
     display: none;
   }
   .mobile-portrait {
+    display: block;
+  }
+  
+  /* Mobile-specific Overlay Styles */
+  .intro-content {
+    font-size: 16px;
+    padding: 20px 30px;
+    margin: 0 20px;
+  }
+  .intro-desktop {
+    display: none;
+  }
+  .intro-mobile {
     display: block;
   }
 }
@@ -89,7 +141,6 @@ input.toggle {
   pointer-events: none;
 }
 
-/* INITIAL STATE: ENGLISH */
 .content.en {
   opacity: 1;
   transform: translateY(0);
@@ -152,33 +203,6 @@ input.toggle:checked ~ .site .jp {
   margin-top: 40px;
 }
 
-/* PILL-SHAPED HINT CONTAINER */
-.hint {
-  display: inline-block;
-  font-size: 12px;
-  color: #000;
-  padding: 6px 16px;
-  border: 1px solid #e0e0e0;
-  background: #f9f9f9;
-  border-radius: 50px;
-  margin-bottom: 20px;
-  letter-spacing: 0.5px;
-  pointer-events: none; /* Let the toggle click through */
-}
-
-.hint-mobile {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .hint-desktop {
-    display: none;
-  }
-  .hint-mobile {
-    display: inline-block;
-  }
-}
-
 /* LOGO */
 .logo {
   margin-top: 80px;
@@ -188,6 +212,19 @@ input.toggle:checked ~ .site .jp {
 </head>
 
 <body>
+
+<div class="intro-overlay">
+  <div class="intro-content">
+    <div class="intro-desktop">
+      Click anywhere to switch language.<br>
+      画面をクリックで日本語
+    </div>
+    <div class="intro-mobile">
+      Tap anywhere to switch language.<br>
+      画面をタッチで日本語
+    </div>
+  </div>
+</div>
 
 <input class="toggle" type="checkbox">
 
@@ -201,9 +238,6 @@ input.toggle:checked ~ .site .jp {
     <div class="content-wrapper">
 
       <div class="content en">
-        <div class="hint hint-desktop">画面をクリックで日本語</div>
-        <div class="hint hint-mobile">画面をタッチで日本語</div>
-
         <div class="mobile-portrait">
           <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko">
         </div>
@@ -227,9 +261,6 @@ input.toggle:checked ~ .site .jp {
       </div>
 
       <div class="content jp">
-        <div class="hint hint-desktop">Click the screen for English</div>
-        <div class="hint hint-mobile">Tap for English</div>
-
         <div class="mobile-portrait">
           <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko">
         </div>
@@ -237,10 +268,10 @@ input.toggle:checked ~ .site .jp {
         <p class="jp-top">こんにちは！</p>
 
         <p class="jp-main">
-         中村洋子と申します。<br><br>
+          中村洋子と申します。<br><br>
           私は、フリーランスの日英通訳・翻訳を30年以上続けてまいりました。専門分野は、主に半導体、医療、法律、芸術、不動産、建築ですが、 その他幅広い分野のご要望にお応えできると思います。<br><br>
-    技術会議、ビジネス会議、セミナー、教育、トレーニング、プレゼンテーション等、お客様の目的に合わせたサービスを提供させていただきます。<br><br>
-    是非お気軽にご連絡ください。
+          技術会議、ビジネス会議、セミナー、教育、トレーニング、プレゼンテーション等、お客様の目的に合わせたサービスを提供させていただきます。<br><br>
+          是非お気軽にご連絡ください。
         </p>
 
         <p class="bold">
