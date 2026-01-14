@@ -152,12 +152,18 @@ input.toggle:checked ~ .site .jp {
   margin-top: 40px;
 }
 
-/* HINT TEXT */
+/* PILL-SHAPED HINT CONTAINER */
 .hint {
-  font-size: 13px;
+  display: inline-block;
+  font-size: 12px;
   color: #000;
-  margin-bottom: 10px;
-  text-decoration: none;
+  padding: 6px 16px;
+  border: 1px solid #e0e0e0;
+  background: #f9f9f9;
+  border-radius: 50px;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+  pointer-events: none; /* Let the toggle click through */
 }
 
 .hint-mobile {
@@ -169,7 +175,7 @@ input.toggle:checked ~ .site .jp {
     display: none;
   }
   .hint-mobile {
-    display: block;
+    display: inline-block;
   }
 }
 
