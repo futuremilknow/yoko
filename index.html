@@ -26,7 +26,7 @@ input.toggle {
   position: fixed;
   inset: 0;
   opacity: 0;
-  z-index: 10;
+  z-index: 100; /* Ensure it stays on top */
   cursor: pointer;
 }
 
@@ -36,6 +36,7 @@ input.toggle {
   top: 40px;
   right: 60px;
   transition: filter 0.6s ease;
+  z-index: 5;
 }
 
 .fixed-image img {
@@ -65,11 +66,9 @@ input.toggle {
   .container {
     padding: 40px 18px;
   }
-
   .fixed-image {
     display: none;
   }
-
   .mobile-portrait {
     display: block;
   }
@@ -83,27 +82,35 @@ input.toggle {
 
 .content {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none; /* Let clicks pass through to the checkbox */
 }
 
-.en {
+/* INITIAL STATE: ENGLISH VISIBLE */
+.content.en {
   opacity: 1;
   transform: translateY(0);
+  pointer-events: auto;
 }
 
 /* TOGGLE STATES */
-input.toggle:checked ~ .container .en {
+/* Hide English when checked */
+input.toggle:checked ~ .site .en {
   opacity: 0;
   transform: translateY(-10px);
   pointer-events: none;
 }
 
-input.toggle:checked ~ .container .jp {
+/* Show Japanese when checked */
+input.toggle:checked ~ .site .jp {
   opacity: 1;
   transform: translateY(0);
+  pointer-events: auto;
 }
 
 .site {
@@ -113,7 +120,7 @@ input.toggle:checked ~ .container .jp {
   transition: background 0.6s ease, color 0.6s ease;
 }
 
-/* JAPANESE MODE */
+/* JAPANESE MODE THEME */
 input.toggle:checked ~ .site {
   background: #000;
   color: #fff;
@@ -121,11 +128,6 @@ input.toggle:checked ~ .site {
 
 /* Invert images in JP mode */
 input.toggle:checked ~ .site img {
-  filter: invert(1);
-}
-
-input.toggle:checked ~ .fixed-image,
-input.toggle:checked ~ .container img {
   filter: invert(1);
 }
 
@@ -196,79 +198,74 @@ input.toggle:checked ~ .container img {
 
 <body>
 
-
 <input class="toggle" type="checkbox">
 
 <div class="site">
 
   <div class="fixed-image">
-  <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko">
-</div>
-
-<div class="container">
-
-  <div class="content-wrapper">
-
-    <!-- ENGLISH -->
-    <div class="content en">
-      <div class="hint hint-desktop">画面をクリックで日本語</div>
-      <div class="hint hint-mobile">画面をタッチで日本語</div>
-
-      <div class="mobile-portrait">
-        <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko">
-      </div>
-
-      <p class="top">Hi, I'm Yoko.</p>
-
-      <p class="main">
-        I'm a freelance translator with over 30 years of experience providing Japanese/English
-        interpretation and translation services for various industries including semiconductor,
-        medical, law, art, real estate and architecture.
-        <br><br>
-        Available for technical meetings, business meetings, seminars, education,
-        training, presentations and more.
-      </p>
-
-      <p class="bold">
-        Feel free to say<br>
-        <b>hello</b>@<b>y-o-k-o.com</b>
-      </p>
-
-      <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Logo">
-    </div>
-
-    <!-- JAPANESE -->
-    <div class="content jp">
-      <div class="hint hint-desktop">Click the screen for English</div>
-      <div class="hint hint-mobile">Tap for English</div>
-
-      <div class="mobile-portrait">
-        <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko">
-      </div>
-
-      <p class="jp-top">こんにちは！</p>
-
-      <p class="jp-main">
-        中村洋子と申します。<br><br>
-        私は、フリーランスの日英通訳・翻訳を30年以上続けてまいりました。
-        専門分野は、主に半導体、医療、法律、芸術、不動産、建築ですが、
-        その他幅広い分野のご要望にお応えできると思います。<br><br>
-        技術会議、ビジネス会議、セミナー、教育、トレーニング、
-        プレゼンテーション等、お客様の目的に合わせた
-        サービスを提供させていただきます。<br><br>
-        是非お気軽にご連絡ください。
-      </p>
-
-      <p class="bold">
-        メール:<br>
-        <b>hello</b>@<b>y-o-k-o.com</b>
-      </p>
-
-      <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Logo">
-    </div>
-
+    <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko">
   </div>
-</div>
-</div> <!-- end .site -->
-</body>
+
+  <div class="container">
+    <div class="content-wrapper">
+
+      <div class="content en">
+        <div class="hint hint-desktop">画面をクリックで日本語</div>
+        <div class="hint hint-mobile">画面をタッチで日本語</div>
+
+        <div class="mobile-portrait">
+          <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko">
+        </div>
+
+        <p class="top">Hi, I'm Yoko.</p>
+
+        <p class="main">
+          I'm a freelance translator with over 30 years of experience providing Japanese/English
+          interpretation and translation services for various industries including semiconductor,
+          medical, law, art, real estate and architecture.
+          <br><br>
+          Available for technical meetings, business meetings, seminars, education,
+          training, presentations and more.
+        </p>
+
+        <p class="bold">
+          Feel free to say<br>
+          <b>hello</b>@<b>y-o-k-o.com</b>
+        </p>
+
+        <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Logo">
+      </div>
+
+      <div class="content jp">
+        <div class="hint hint-desktop">Click the screen for English</div>
+        <div class="hint hint-mobile">Tap for English</div>
+
+        <div class="mobile-portrait">
+          <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko">
+        </div>
+
+        <p class="jp-top">こんにちは！</p>
+
+        <p class="jp-main">
+         中村洋子と申します。<br><br>
+    私は、フリーランスの日英通訳・翻訳を30年以上続けてまいりました。
+    専門分野は、主に半導体、医療、法律、芸術、不動産、建築ですが、
+    その他幅広い分野のご要望にお応えできると思います。<br><br>
+    技術会議、ビジネス会議、セミナー、教育、トレーニング、
+    プレゼンテーション等、お客様の目的に合わせた
+    サービスを提供させていただきます。<br><br>
+    是非お気軽にご連絡ください。
+        </p>
+
+        <p class="bold">
+          お問い合わせはこちらまで：<br>
+          <b>hello</b>@<b>y-o-k-o.com</b>
+        </p>
+
+        <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Logo">
+      </div>
+
+    </div>
+  </div>
+</div> </body>
 </html>
