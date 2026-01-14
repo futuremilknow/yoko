@@ -8,15 +8,21 @@
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;800&display=swap" rel="stylesheet">
 
 <style>
+/* RESET */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   background: #ffffff;
   color: #000;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   overflow-x: hidden;
+  transition: background 0.6s ease, color 0.6s ease;
 }
 
-/* Click-toggle checkbox */
+/* CLICK TOGGLE */
 input.toggle {
   position: fixed;
   inset: 0;
@@ -25,42 +31,49 @@ input.toggle {
   cursor: pointer;
 }
 
-/* Layout */
+/* LAYOUT */
 .container {
   max-width: 800px;
   padding: 80px 100px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 @media (max-width: 768px) {
   .container {
-    padding: 40px 15px;
+    padding: 40px 18px;
   }
 }
 
-/* Fixed image */
+/* FIXED IMAGE (DESKTOP) */
 .fixed-image {
   position: fixed;
   top: 40px;
   right: 60px;
+  transition: filter 0.6s ease;
 }
 
 .fixed-image img {
   height: 160px;
 }
 
+/* MOBILE IMAGE BEHAVIOR */
 @media (max-width: 768px) {
   .fixed-image {
     position: static;
-    margin-bottom: 20px;
+    margin: 15px 0 30px;
+    text-align: center;
   }
+
   .fixed-image img {
     width: 100%;
-    max-width: 220px;
+    max-width: 280px;
     height: auto;
   }
 }
 
-/* Typography */
+/* TYPOGRAPHY */
 .top {
   font-size: 70px;
   font-weight: 700;
@@ -76,7 +89,7 @@ input.toggle {
 
 @media (max-width: 768px) {
   .top {
-    font-size: 55px;
+    font-size: 52px;
     margin-top: 10px;
   }
 }
@@ -97,31 +110,73 @@ input.toggle {
   margin-top: 40px;
 }
 
-/* Language hint */
+/* LANGUAGE HINT */
 .hint {
   color: #cb5464;
   font-size: 13px;
   margin-bottom: 10px;
 }
 
-/* Logos */
+/* LOGO */
 .logo {
   display: block;
   margin-top: 80px;
   width: 120px;
+  transition: filter 0.6s ease;
 }
 
-/* Toggle logic */
+/* TOGGLE VISIBILITY */
 .jp {
   display: none;
 }
 
+/* ANIMATION + COLOR SWITCH */
 input.toggle:checked ~ .en {
-  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
 }
 
 input.toggle:checked ~ .jp {
   display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+input.toggle:checked ~ .fixed-image,
+input.toggle:checked ~ .jp .logo {
+  filter: invert(1);
+}
+
+input.toggle:checked ~ body,
+input.toggle:checked ~ .jp {
+  background: #000;
+  color: #fff;
+}
+
+/* BODY COLOR SWITCH */
+input.toggle:checked ~ .en,
+input.toggle:checked ~ .jp {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* DARK MODE */
+input.toggle:checked ~ .jp {
+  color: #fff;
+}
+
+input.toggle:checked ~ .jp .hint {
+  color: #888;
+}
+
+/* BACKGROUND SWITCH */
+input.toggle:checked ~ .container,
+input.toggle:checked ~ .fixed-image {
+  transition: all 0.6s ease;
+}
+
+input.toggle:checked ~ body {
+  background: #000;
 }
 </style>
 </head>
@@ -131,7 +186,6 @@ input.toggle:checked ~ .jp {
 <input class="toggle" type="checkbox">
 
 <div class="fixed-image">
-  <!-- YOKO ILLUSTRATION -->
   <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko-illo.png" alt="Yoko">
 </div>
 
@@ -155,7 +209,6 @@ input.toggle:checked ~ .jp {
     <b>hello</b>@<b>y-o-k-o.com</b>
   </p>
 
-  <!-- TEMP LOGO PLACEHOLDER -->
   <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Logo">
 </div>
 
@@ -181,7 +234,6 @@ input.toggle:checked ~ .jp {
     <b>hello</b>@<b>y-o-k-o.com</b>
   </p>
 
-  <!-- TEMP LOGO PLACEHOLDER -->
   <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Logo">
 </div>
 
