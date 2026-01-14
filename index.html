@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yoko Nakamura | Japanese English Translator & Interpreter</title>
 
-<meta name="description" content="Professional Japanese/English interpretation and translation services by Yoko Nakamura. 30+ years of experience in semiconductor, medical, legal, and art sectors.">
+<meta name="description" content="Japanese/English interpretation and translation services by Yoko Nakamura. 30+ years of experience in semiconductor, medical, legal, and art sectors.">
 <meta property="og:title" content="Yoko Nakamura | Japanese English Translator">
-<meta property="og:description" content="Professional Japanese/English translation services with over 30 years of experience.">
+<meta property="og:description" content="Japanese/English translation services with over 30 years of experience.">
 <meta property="og:image" content="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png">
 <meta property="og:url" content="https://y-o-k-o.com">
 <meta property="og:type" content="website">
@@ -34,13 +34,12 @@ body {
 /* --- INTERACTIVE CURSOR --- */
 #custom-cursor {
   position: fixed;
-  width: 380px; 
-  height: 380px;
+  width: 480px; 
+  height: 480px;
   background-color: white; 
   border-radius: 50%;
   pointer-events: none;
   z-index: 999;
-  /* Start in the middle of the screen */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -52,12 +51,15 @@ body {
 /* --- INTRO OVERLAY --- */
 .intro-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* Absolute full screen height */
   z-index: 200;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center; /* Forces vertical centering */
   text-align: center;
   pointer-events: none;
   animation: fadeOutOverlay 0.8s forwards;
@@ -82,7 +84,6 @@ body {
   margin-top: 5px;
 }
 
-/* Hide/Show Intro Logic */
 .intro-desktop { display: block; }
 .intro-mobile { display: none; }
 
@@ -117,8 +118,11 @@ input.toggle {
   .intro-content { font-size: 24px; padding: 0 20px; }
   
   .content { left: 24px !important; right: 24px !important; top: 40px !important; }
-  
   .content.jp { padding-bottom: 120px; }
+
+  /* Fluid Japanese header to prevent wrapping */
+  .jp-top { font-size: 14vw !important; white-space: nowrap; margin-top: 10px; }
+  .top { font-size: 72px; margin-top: 10px; }
 
   .mobile-portrait { display: block !important; opacity: 1 !important; transform: none !important; margin-bottom: 25px; }
   .mobile-portrait img { max-width: 280px; width: 100%; }
@@ -164,11 +168,6 @@ input.toggle:checked ~ .site .jp .logo { opacity: 1; transform: translateY(0); }
 /* TYPOGRAPHY */
 .top, .jp-top { margin-top: 0; margin-bottom: 30px; display: block; font-size: 90px; font-weight: 700; }
 .jp-top { font-size: 80px; font-weight: 800; font-family: "M PLUS 1p", sans-serif; }
-
-@media (max-width: 768px) {
-  .top { font-size: 72px; margin-top: 10px; }
-  .jp-top { font-size: 58px; margin-top: 10px; }
-}
 
 .main { font-size: 22px; line-height: 1.5; }
 .jp-main { font-size: 20px; line-height: 1.5; font-family: "M PLUS 1p", sans-serif; }
