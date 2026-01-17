@@ -31,7 +31,7 @@ body {
   overflow: hidden; 
 }
 
-/* --- MOBILE TAP BLOOM (Slow & Subtle) --- */
+/* --- MOBILE TAP BLOOM (Large, Slow, Instant Cut) --- */
 .tap-bloom {
   position: fixed;
   width: 60px;
@@ -41,13 +41,14 @@ body {
   pointer-events: none;
   z-index: 999;
   transform: translate(-50%, -50%) scale(0);
-  /* 1.0s duration for a slow bloom */
+  /* 1.0s expansion */
   animation: bloomEffect 1s ease-out forwards;
 }
 
 @keyframes bloomEffect {
   0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0; }
+  99% { transform: translate(-50%, -50%) scale(1.17); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.17); opacity: 0; }
 }
 
 /* --- INTERACTIVE CURSOR --- */
@@ -279,7 +280,7 @@ input.toggle:checked ~ .site .jp h1, input.toggle:checked ~ .site .jp p, input.t
     updateCursorColor(e.clientX, e.clientY);
   });
 
-  // --- MOBILE BLOOM (Slow & Subtle) ---
+  // --- MOBILE BLOOM (Large, Slow, Instant Cut) ---
   document.addEventListener('touchstart', (e) => {
     const touch = e.touches[0];
     const bloom = document.createElement('div');
