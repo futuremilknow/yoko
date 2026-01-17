@@ -31,38 +31,11 @@ body {
   overflow: hidden; 
 }
 
-/* --- FULLSCREEN RADIAL FLASH --- */
-#flash-layer {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  pointer-events: none;
-  opacity: 0;
-  mix-blend-mode: exclusion;
-  background-color: white;
-}
-
-/* This class triggers the motion */
-.flash-active {
-  animation: radialImpact 0.5s cubic-bezier(0.15, 0, 0.15, 1) forwards;
-}
-
-@keyframes radialImpact {
-  0% {
-    opacity: 1;
-    clip-path: circle(0% at var(--x) var(--y));
-  }
-  100% {
-    opacity: 0;
-    clip-path: circle(150% at var(--x) var(--y));
-  }
-}
-
 /* --- INTERACTIVE CURSOR --- */
 #custom-cursor {
   position: fixed;
-  width: 26px; 
-  height: 26px;
+  width: 30px; 
+  height: 30px;
   background-color: white; 
   border-radius: 50%;
   pointer-events: none;
@@ -74,7 +47,10 @@ body {
   backdrop-filter: blur(1px);
 }
 
-#custom-cursor.active-site { width: 100px; height: 100px; }
+#custom-cursor.active-site {
+  width: 80px;
+  height: 80px;
+}
 
 #cursor-label {
   position: fixed;
@@ -83,73 +59,161 @@ body {
   top: 0; left: 0;
   transform: translate(-50%, -50%);
   color: #ffffff !important;
-  font-family: "M PLUS 1p", sans-serif;
+  font-family: "M PLUS 1p", -apple-system, sans-serif;
   font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-align: center;
   opacity: 0;
-  animation: fadeInLabel 0.8s forwards 3.5s; 
+  animation: fadeInLabel 0.8s forwards;
+  animation-delay: 3.5s; 
 }
 
-@keyframes fadeInLabel { from { opacity: 0; } to { opacity: 1; } }
+#cursor-label.jp-label {
+  font-size: 11px;
+}
+
+@keyframes fadeInLabel {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
 /* --- INTRO OVERLAY --- */
 .intro-overlay {
   position: fixed;
-  top: 0; left: 0; width: 100%; height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
   z-index: 200;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; pointer-events: none;
-  animation: fadeOutOverlay 0.8s forwards 3s; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* This centers the flex container content */
+  text-align: center;
+  pointer-events: none;
+  animation: fadeOutOverlay 0.8s forwards;
+  animation-delay: 3s; 
 }
 
+/* Spacer to offset the timer so text stays vertically centered */
 .timer-wrapper {
   position: absolute;
-  transform: translateY(-80px);
-  display: flex; flex-direction: column; align-items: center;
+  transform: translateY(-80px); /* Adjust this to change distance from text */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.timer-svg { width: 40px; height: 40px; transform: rotate(-90deg); }
+.timer-svg {
+  width: 40px; 
+  height: 40px; 
+  transform: rotate(-90deg);
+}
+
 .timer-circle-bg { fill: none; stroke: rgba(255, 255, 255, 0.1); stroke-width: 2; }
 .timer-circle-progress { 
-    fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; 
-    stroke-dasharray: 345; stroke-dashoffset: 0; 
+    fill: none; 
+    stroke: #fff; 
+    stroke-width: 2; 
+    stroke-linecap: round; 
+    stroke-dasharray: 345; 
+    stroke-dashoffset: 0; 
     animation: timerStroke 3s linear forwards; 
 }
 
-.intro-content { font-size: 21px; font-weight: 700; line-height: 1.2; color: #fff; z-index: 201; }
-.jp-sub { font-size: 0.7em; font-weight: 400; display: block; margin-top: 5px; }
+.intro-content {
+  font-size: 21px;
+  font-weight: 700; 
+  line-height: 1.2; 
+  color: #fff; 
+  position: relative; 
+  letter-spacing: -0.02em;
+  z-index: 201;
+}
+
+.mobile-text { display: none; }
+
+.jp-sub {
+  font-size: 0.7em; 
+  font-weight: 400;
+  display: block;
+  margin-top: 5px;
+}
 
 @keyframes timerStroke { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -345; } }
 @keyframes fadeOutOverlay { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
 
 /* UI CONTROLS */
-input.toggle { position: fixed; inset: 0; opacity: 0; z-index: 100; width: 100vw; height: 100vh; }
-.fixed-image { position: fixed; top: 40px; right: 100px; z-index: 5; }
-.fixed-image img { height: 160px; }
-.container { max-width: 970px; padding: 40px 100px 80px; position: relative; }
+input.toggle {
+  position: fixed; inset: 0; opacity: 0; z-index: 100; width: 100vw; height: 100vh;
+}
 
+.fixed-image {
+  position: fixed; top: 40px; right: 100px; z-index: 5;
+}
+.fixed-image img { height: 160px; }
+
+.container {
+  max-width: 970px;
+  padding: 40px 100px 80px;
+  position: relative;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
 @media (max-width: 768px) {
   body { overflow-y: auto; cursor: auto !important; }
   #custom-cursor, #cursor-label { display: none; }
   .container { padding: 40px 24px; }
   .fixed-image { display: none; }
+  
   .desktop-text { display: none; }
   .mobile-text { display: inline; }
+
   .intro-content { font-size: 20px; }
+  .timer-svg { width: 40px; height: 40px; }
+  .timer-wrapper { transform: translateY(-70px); }
+
   .content { left: 24px !important; right: 24px !important; top: 40px !important; }
   .content.en, .content.jp { padding-bottom: 120px; }
-  .jp-top { font-size: 14vw !important; white-space: nowrap; }
-  .top { font-size: 72px; }
-  .mobile-portrait { display: block !important; opacity: 1 !important; margin-bottom: 25px; }
+
+  .jp-top { font-size: 14vw !important; white-space: nowrap; margin-top: 10px; }
+  .top { font-size: 72px; margin-top: 10px; }
+
+  .mobile-portrait { display: block !important; opacity: 1 !important; transform: none !important; margin-bottom: 25px; }
   .mobile-portrait img { max-width: 280px; width: 100%; }
 }
 
-.content { position: absolute; top: 40px; left: 100px; right: 100px; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
-.content h1, .content p, .content h3, .content .logo { opacity: 0; transform: translateY(20px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+/* --- CONTENT FADE-IN --- */
+.content {
+  position: absolute;
+  top: 40px;
+  left: 100px;
+  right: 100px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
 
+.content h1, .content p, .content h3, .content .logo {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* English is default (Checkbox NOT checked) */
 input.toggle:not(:checked) ~ .site .en { opacity: 1; pointer-events: auto; }
-input.toggle:not(:checked) ~ .site .en h1, input.toggle:not(:checked) ~ .site .en p, input.toggle:not(:checked) ~ .site .en h3, input.toggle:not(:checked) ~ .site .en .logo { opacity: 1; transform: translateY(0); }
+input.toggle:not(:checked) ~ .site .en h1, 
+input.toggle:not(:checked) ~ .site .en p, 
+input.toggle:not(:checked) ~ .site .en h3, 
+input.toggle:not(:checked) ~ .site .en .logo { opacity: 1; transform: translateY(0); }
+
+/* Japanese shows when Checkbox IS checked */
 input.toggle:checked ~ .site .jp { opacity: 1; pointer-events: auto; }
-input.toggle:checked ~ .site .jp h1, input.toggle:checked ~ .site .jp p, input.toggle:checked ~ .site .jp h3, input.toggle:checked ~ .site .jp .logo { opacity: 1; transform: translateY(0); }
+input.toggle:checked ~ .site .jp h1, 
+input.toggle:checked ~ .site .jp p, 
+input.toggle:checked ~ .site .jp h3, 
+input.toggle:checked ~ .site .jp .logo { opacity: 1; transform: translateY(0); }
 
 .content h1 { transition-delay: 0.2s; }
 .content p { transition-delay: 0.5s; }
@@ -163,12 +227,12 @@ input.toggle:checked ~ .site .jp h1, input.toggle:checked ~ .site .jp p, input.t
 .jp-main { font-size: 20px; line-height: 1.5; font-family: "M PLUS 1p", sans-serif; }
 .bold { font-size: 32px; margin-top: 40px; }
 .logo { margin-top: 80px; width: 120px; }
+.mobile-portrait { display: none; }
 </style>
 </head>
 
 <body>
 
-<div id="flash-layer"></div>
 <div id="custom-cursor"></div>
 <div id="cursor-label">click</div>
 
@@ -204,7 +268,14 @@ input.toggle:checked ~ .site .jp h1, input.toggle:checked ~ .site .jp p, input.t
           <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko Nakamura">
         </div>
         <h1 class="top">Hi, I'm Yoko.</h1>
-        <p class="main">I'm a freelance translator with over 30 years of experience providing Japanese/English interpretation and translation services. My expertise covers a variety of industries, including the semiconductor industry, the medical field, legal matters, and the arts. I also provide interpreting services for business meetings and international conferences. My goal is to bridge the gap between cultures and help people communicate effectively.</p>
+        <p class="main">
+          I'm a freelance translator with over 30 years of experience providing Japanese/English
+          interpretation and translation services for various industries including semiconductor,
+          medical, law, art, real estate and architecture.
+          <br><br>
+          Available for technical meetings, business meetings, seminars, education,
+          training, presentations and more.
+        </p>
         <h3 class="bold">Email:<br><b>hello</b>@<b>y-o-k-o.com</b></h3>
         <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Yoko Logo">
       </div>
@@ -214,7 +285,12 @@ input.toggle:checked ~ .site .jp h1, input.toggle:checked ~ .site .jp p, input.t
           <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko Nakamura">
         </div>
         <h1 class="jp-top">こんにちは！</h1>
-        <p class="jp-main">中村洋子と申します。私は、フリーランスの日英通訳・翻訳を30年以上続けてまいりました。半導体業界、医療分野、法律、そして芸術など、幅広い分野での実績がございます。ビジネス会議や国際会議での同時通訳・逐次通訳も承っております。言葉の壁を越え、円滑なコミュニケーションと相互理解をサポートすることをミッションとしています。</p>
+        <p class="jp-main">
+          中村洋子と申します。<br><br>
+          私は、フリーランスの日英通訳・翻訳を30年以上続けてまいりました。専門分野は、主に半導体、医療、法律、芸術、不動産、建築ですが、 その他幅広い分野のご要望にお応えできると思います。<br><br>
+          技術会議、ビジネス会議、セミナー、教育、トレーニング、プレゼンテーション等、お客様の目的に合わせたサービスを提供させていただきます。<br><br>
+          是非お気軽にご連絡ください。
+        </p>
         <h3 class="bold">メール：<br><b>hello</b>@<b>y-o-k-o.com</b></h3>
         <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="ロゴ">
       </div>
@@ -224,7 +300,9 @@ input.toggle:checked ~ .site .jp h1, input.toggle:checked ~ .site .jp p, input.t
 
 <script>
   function hexToRgba(hex, opacity) {
-    let r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+    let r = parseInt(hex.slice(1, 3), 16),
+        g = parseInt(hex.slice(3, 5), 16),
+        b = parseInt(hex.slice(5, 7), 16);
     return `rgba(${r}, ${g}, ${b}, ${opacity})`;
   }
 
@@ -235,39 +313,45 @@ input.toggle:checked ~ .site .jp h1, input.toggle:checked ~ .site .jp p, input.t
   const cursor = document.getElementById('custom-cursor');
   const label = document.getElementById('cursor-label');
   const toggle = document.getElementById('langToggle');
-  const flash = document.getElementById('flash-layer');
-
+  const timerSvg = document.querySelector('.timer-svg');
+  
   function updateCursorColor(x, y) {
-    const hue = ((x + y) / 3) % 360;
+    const sensitivity = 8; 
+    const hue = ((x + y) / sensitivity) % 360;
     cursor.style.backgroundColor = `hsl(${hue}, 75%, 50%)`;
   }
 
-  // --- RADIAL IMPACT FLASH ---
-  function triggerFlash(x, y) {
-    const hue = ((x + y) / 3) % 360;
-    flash.style.backgroundColor = `hsl(${hue}, 75%, 50%)`;
-    flash.style.setProperty('--x', x + 'px');
-    flash.style.setProperty('--y', y + 'px');
-    
-    flash.classList.remove('flash-active');
-    void flash.offsetWidth; // Force reflow
-    flash.classList.add('flash-active');
+  function setInitialCursorPosition() {
+    const rect = timerSvg.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    cursor.style.left = label.style.left = centerX + 'px';
+    cursor.style.top = label.style.top = centerY + 'px';
+    updateCursorColor(centerX, centerY);
   }
+
+  window.addEventListener('load', () => {
+    setInitialCursorPosition();
+    setTimeout(() => {
+        cursor.classList.add('active-site');
+    }, 3000);
+  });
+
+  toggle.addEventListener('change', () => {
+    const isMobile = window.innerWidth <= 768;
+    if (toggle.checked) {
+      label.textContent = isMobile ? "タッチ" : "クリック";
+      label.classList.add('jp-label');
+    } else {
+      label.textContent = "click"; // Default desktop
+      label.classList.remove('jp-label');
+    }
+  });
 
   document.addEventListener('mousemove', (e) => {
     cursor.style.left = label.style.left = e.clientX + 'px';
     cursor.style.top = label.style.top = e.clientY + 'px';
     updateCursorColor(e.clientX, e.clientY);
-  });
-
-  // Handle both clicks and touches
-  document.addEventListener('mousedown', (e) => triggerFlash(e.clientX, e.clientY));
-  document.addEventListener('touchstart', (e) => triggerFlash(e.touches[0].clientX, e.touches[0].clientY));
-
-  // Language text update
-  toggle.addEventListener('change', () => {
-    const isMobile = window.innerWidth <= 768;
-    label.textContent = toggle.checked ? (isMobile ? "タッチ" : "クリック") : (isMobile ? "tap" : "click");
   });
 </script>
 
