@@ -31,23 +31,31 @@ body {
   overflow: hidden; 
 }
 
-/* --- MOBILE TAP BLOOM (0.4s Speed, 1.87 Scale) --- */
-.tap-bloom {
+/* --- FULLSCREEN RADIAL FLASH --- */
+#flash-layer {
   position: fixed;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  mix-blend-mode: exclusion;
+  inset: 0;
+  z-index: 1000;
   pointer-events: none;
-  z-index: 999;
-  transform: translate(-50%, -50%) scale(0);
-  animation: bloomEffect 0.4s ease-out forwards;
+  opacity: 0;
+  mix-blend-mode: exclusion;
+  background-color: white;
 }
 
-@keyframes bloomEffect {
-  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-  99% { transform: translate(-50%, -50%) scale(1.87); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(1.87); opacity: 0; }
+/* This class triggers the motion */
+.flash-active {
+  animation: radialImpact 0.5s cubic-bezier(0.15, 0, 0.15, 1) forwards;
+}
+
+@keyframes radialImpact {
+  0% {
+    opacity: 1;
+    clip-path: circle(0% at var(--x) var(--y));
+  }
+  100% {
+    opacity: 0;
+    clip-path: circle(150% at var(--x) var(--y));
+  }
 }
 
 /* --- INTERACTIVE CURSOR --- */
@@ -66,10 +74,7 @@ body {
   backdrop-filter: blur(1px);
 }
 
-#custom-cursor.active-site {
-  width: 100px;
-  height: 100px;
-}
+#custom-cursor.active-site { width: 100px; height: 100px; }
 
 #cursor-label {
   position: fixed;
@@ -78,24 +83,13 @@ body {
   top: 0; left: 0;
   transform: translate(-50%, -50%);
   color: #ffffff !important;
-  font-family: "M PLUS 1p", -apple-system, sans-serif;
+  font-family: "M PLUS 1p", sans-serif;
   font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  text-align: center;
   opacity: 0;
-  animation: fadeInLabel 0.8s forwards;
-  animation-delay: 3.5s; 
+  animation: fadeInLabel 0.8s forwards 3.5s; 
 }
 
-#cursor-label.jp-label {
-  font-size: 11px;
-}
-
-@keyframes fadeInLabel {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+@keyframes fadeInLabel { from { opacity: 0; } to { opacity: 1; } }
 
 /* --- INTRO OVERLAY --- */
 .intro-overlay {
@@ -104,8 +98,7 @@ body {
   z-index: 200;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   text-align: center; pointer-events: none;
-  animation: fadeOutOverlay 0.8s forwards;
-  animation-delay: 3s; 
+  animation: fadeOutOverlay 0.8s forwards 3s; 
 }
 
 .timer-wrapper {
@@ -132,10 +125,8 @@ body {
 input.toggle { position: fixed; inset: 0; opacity: 0; z-index: 100; width: 100vw; height: 100vh; }
 .fixed-image { position: fixed; top: 40px; right: 100px; z-index: 5; }
 .fixed-image img { height: 160px; }
-
 .container { max-width: 970px; padding: 40px 100px 80px; position: relative; }
 
-/* --- MOBILE RESPONSIVENESS --- */
 @media (max-width: 768px) {
   body { overflow-y: auto; cursor: auto !important; }
   #custom-cursor, #cursor-label { display: none; }
@@ -144,12 +135,10 @@ input.toggle { position: fixed; inset: 0; opacity: 0; z-index: 100; width: 100vw
   .desktop-text { display: none; }
   .mobile-text { display: inline; }
   .intro-content { font-size: 20px; }
-  .timer-svg { width: 40px; height: 40px; }
-  .timer-wrapper { transform: translateY(-70px); }
   .content { left: 24px !important; right: 24px !important; top: 40px !important; }
   .content.en, .content.jp { padding-bottom: 120px; }
-  .jp-top { font-size: 14vw !important; white-space: nowrap; margin-top: 10px; }
-  .top { font-size: 72px; margin-top: 10px; }
+  .jp-top { font-size: 14vw !important; white-space: nowrap; }
+  .top { font-size: 72px; }
   .mobile-portrait { display: block !important; opacity: 1 !important; margin-bottom: 25px; }
   .mobile-portrait img { max-width: 280px; width: 100%; }
 }
@@ -179,6 +168,7 @@ input.toggle:checked ~ .site .jp h1, input.toggle:checked ~ .site .jp p, input.t
 
 <body>
 
+<div id="flash-layer"></div>
 <div id="custom-cursor"></div>
 <div id="cursor-label">click</div>
 
@@ -245,33 +235,24 @@ input.toggle:checked ~ .site .jp h1, input.toggle:checked ~ .site .jp p, input.t
   const cursor = document.getElementById('custom-cursor');
   const label = document.getElementById('cursor-label');
   const toggle = document.getElementById('langToggle');
-  const timerSvg = document.querySelector('.timer-svg');
-  
+  const flash = document.getElementById('flash-layer');
+
   function updateCursorColor(x, y) {
-    const sensitivity = 3; 
-    const hue = ((x + y) / sensitivity) % 360;
+    const hue = ((x + y) / 3) % 360;
     cursor.style.backgroundColor = `hsl(${hue}, 75%, 50%)`;
   }
 
-  function setInitialCursorPosition() {
-    const rect = timerSvg.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    cursor.style.left = label.style.left = centerX + 'px';
-    cursor.style.top = label.style.top = centerY + 'px';
-    updateCursorColor(centerX, centerY);
+  // --- RADIAL IMPACT FLASH ---
+  function triggerFlash(x, y) {
+    const hue = ((x + y) / 3) % 360;
+    flash.style.backgroundColor = `hsl(${hue}, 75%, 50%)`;
+    flash.style.setProperty('--x', x + 'px');
+    flash.style.setProperty('--y', y + 'px');
+    
+    flash.classList.remove('flash-active');
+    void flash.offsetWidth; // Force reflow
+    flash.classList.add('flash-active');
   }
-
-  window.addEventListener('load', () => {
-    setInitialCursorPosition();
-    setTimeout(() => { cursor.classList.add('active-site'); }, 3000);
-  });
-
-  toggle.addEventListener('change', () => {
-    const isMobile = window.innerWidth <= 768;
-    label.textContent = toggle.checked ? (isMobile ? "タッチ" : "クリック") : (isMobile ? "tap" : "click");
-    toggle.checked ? label.classList.add('jp-label') : label.classList.remove('jp-label');
-  });
 
   document.addEventListener('mousemove', (e) => {
     cursor.style.left = label.style.left = e.clientX + 'px';
@@ -279,17 +260,14 @@ input.toggle:checked ~ .site .jp h1, input.toggle:checked ~ .site .jp p, input.t
     updateCursorColor(e.clientX, e.clientY);
   });
 
-  // --- MOBILE BLOOM (0.4s Fast, 1.87 Large) ---
-  document.addEventListener('touchstart', (e) => {
-    const touch = e.touches[0];
-    const bloom = document.createElement('div');
-    bloom.className = 'tap-bloom';
-    bloom.style.left = touch.clientX + 'px';
-    bloom.style.top = touch.clientY + 'px';
-    const hue = ((touch.clientX + touch.clientY) / 3) % 360;
-    bloom.style.backgroundColor = `hsl(${hue}, 75%, 50%)`;
-    document.body.appendChild(bloom);
-    setTimeout(() => bloom.remove(), 400); 
+  // Handle both clicks and touches
+  document.addEventListener('mousedown', (e) => triggerFlash(e.clientX, e.clientY));
+  document.addEventListener('touchstart', (e) => triggerFlash(e.touches[0].clientX, e.touches[0].clientY));
+
+  // Language text update
+  toggle.addEventListener('change', () => {
+    const isMobile = window.innerWidth <= 768;
+    label.textContent = toggle.checked ? (isMobile ? "タッチ" : "クリック") : (isMobile ? "tap" : "click");
   });
 </script>
 
