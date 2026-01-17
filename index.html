@@ -31,11 +31,29 @@ body {
   overflow: hidden; 
 }
 
+/* --- MOBILE TAP BLOOM --- */
+.tap-bloom {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  mix-blend-mode: exclusion;
+  pointer-events: none;
+  z-index: 999;
+  transform: translate(-50%, -50%) scale(0);
+  animation: bloomEffect 0.8s ease-out forwards;
+}
+
+@keyframes bloomEffect {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+}
+
 /* --- INTERACTIVE CURSOR --- */
 #custom-cursor {
   position: fixed;
-  width: 30px; 
-  height: 30px;
+  width: 26px; 
+  height: 26px;
   background-color: white; 
   border-radius: 50%;
   pointer-events: none;
@@ -48,8 +66,8 @@ body {
 }
 
 #custom-cursor.active-site {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
 }
 
 #cursor-label {
@@ -60,9 +78,9 @@ body {
   transform: translate(-50%, -50%);
   color: #ffffff !important;
   font-family: "M PLUS 1p", -apple-system, sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   text-align: center;
   opacity: 0;
   animation: fadeInLabel 0.8s forwards;
@@ -89,17 +107,16 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* This centers the flex container content */
+  justify-content: center;
   text-align: center;
   pointer-events: none;
   animation: fadeOutOverlay 0.8s forwards;
   animation-delay: 3s; 
 }
 
-/* Spacer to offset the timer so text stays vertically centered */
 .timer-wrapper {
   position: absolute;
-  transform: translateY(-80px); /* Adjust this to change distance from text */
+  transform: translateY(-80px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -201,14 +218,12 @@ input.toggle {
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* English is default (Checkbox NOT checked) */
 input.toggle:not(:checked) ~ .site .en { opacity: 1; pointer-events: auto; }
 input.toggle:not(:checked) ~ .site .en h1, 
 input.toggle:not(:checked) ~ .site .en p, 
 input.toggle:not(:checked) ~ .site .en h3, 
 input.toggle:not(:checked) ~ .site .en .logo { opacity: 1; transform: translateY(0); }
 
-/* Japanese shows when Checkbox IS checked */
 input.toggle:checked ~ .site .jp { opacity: 1; pointer-events: auto; }
 input.toggle:checked ~ .site .jp h1, 
 input.toggle:checked ~ .site .jp p, 
@@ -316,7 +331,7 @@ input.toggle:checked ~ .site .jp .logo { opacity: 1; transform: translateY(0); }
   const timerSvg = document.querySelector('.timer-svg');
   
   function updateCursorColor(x, y) {
-    const sensitivity = 8; 
+    const sensitivity = 3; 
     const hue = ((x + y) / sensitivity) % 360;
     cursor.style.backgroundColor = `hsl(${hue}, 75%, 50%)`;
   }
@@ -352,6 +367,23 @@ input.toggle:checked ~ .site .jp .logo { opacity: 1; transform: translateY(0); }
     cursor.style.left = label.style.left = e.clientX + 'px';
     cursor.style.top = label.style.top = e.clientY + 'px';
     updateCursorColor(e.clientX, e.clientY);
+  });
+
+  // --- TAP BLOOM FOR MOBILE ---
+  document.addEventListener('touchstart', (e) => {
+    const touch = e.touches[0];
+    const bloom = document.createElement('div');
+    bloom.className = 'tap-bloom';
+    bloom.style.left = touch.clientX + 'px';
+    bloom.style.top = touch.clientY + 'px';
+    
+    // Using coordinate-based hue to match desktop vibe
+    const sensitivity = 3;
+    const hue = ((touch.clientX + touch.clientY) / sensitivity) % 360;
+    bloom.style.backgroundColor = `hsl(${hue}, 75%, 50%)`;
+    
+    document.body.appendChild(bloom);
+    setTimeout(() => bloom.remove(), 800);
   });
 </script>
 
