@@ -31,7 +31,7 @@ body {
   overflow: hidden; 
 }
 
-/* --- MOBILE TAP BLOOM (Large, Slow, Instant Cut) --- */
+/* --- MOBILE TAP BLOOM (0.4s Speed, 1.87 Scale) --- */
 .tap-bloom {
   position: fixed;
   width: 60px;
@@ -41,14 +41,13 @@ body {
   pointer-events: none;
   z-index: 999;
   transform: translate(-50%, -50%) scale(0);
-  /* 1.0s expansion */
-  animation: bloomEffect 1s ease-out forwards;
+  animation: bloomEffect 0.4s ease-out forwards;
 }
 
 @keyframes bloomEffect {
   0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-  99% { transform: translate(-50%, -50%) scale(1.17); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(1.17); opacity: 0; }
+  99% { transform: translate(-50%, -50%) scale(1.87); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.87); opacity: 0; }
 }
 
 /* --- INTERACTIVE CURSOR --- */
@@ -215,7 +214,7 @@ input.toggle:checked ~ .site .jp h1, input.toggle:checked ~ .site .jp p, input.t
           <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko Nakamura">
         </div>
         <h1 class="top">Hi, I'm Yoko.</h1>
-        <p class="main">I'm a freelance translator with over 30 years of experience providing Japanese/English interpretation and translation services...</p>
+        <p class="main">I'm a freelance translator with over 30 years of experience providing Japanese/English interpretation and translation services. My expertise covers a variety of industries, including the semiconductor industry, the medical field, legal matters, and the arts. I also provide interpreting services for business meetings and international conferences. My goal is to bridge the gap between cultures and help people communicate effectively.</p>
         <h3 class="bold">Email:<br><b>hello</b>@<b>y-o-k-o.com</b></h3>
         <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="Yoko Logo">
       </div>
@@ -225,7 +224,7 @@ input.toggle:checked ~ .site .jp h1, input.toggle:checked ~ .site .jp p, input.t
           <img src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_illo.png" alt="Yoko Nakamura">
         </div>
         <h1 class="jp-top">こんにちは！</h1>
-        <p class="jp-main">中村洋子と申します。私は、フリーランスの日英通訳・翻訳を30年以上続けてまいりました...</p>
+        <p class="jp-main">中村洋子と申します。私は、フリーランスの日英通訳・翻訳を30年以上続けてまいりました。半導体業界、医療分野、法律、そして芸術など、幅広い分野での実績がございます。ビジネス会議や国際会議での同時通訳・逐次通訳も承っております。言葉の壁を越え、円滑なコミュニケーションと相互理解をサポートすることをミッションとしています。</p>
         <h3 class="bold">メール：<br><b>hello</b>@<b>y-o-k-o.com</b></h3>
         <img class="logo" src="https://raw.githubusercontent.com/futuremilknow/yoko/refs/heads/main/img/yoko_logo.png" alt="ロゴ">
       </div>
@@ -280,7 +279,7 @@ input.toggle:checked ~ .site .jp h1, input.toggle:checked ~ .site .jp p, input.t
     updateCursorColor(e.clientX, e.clientY);
   });
 
-  // --- MOBILE BLOOM (Large, Slow, Instant Cut) ---
+  // --- MOBILE BLOOM (0.4s Fast, 1.87 Large) ---
   document.addEventListener('touchstart', (e) => {
     const touch = e.touches[0];
     const bloom = document.createElement('div');
@@ -290,7 +289,7 @@ input.toggle:checked ~ .site .jp h1, input.toggle:checked ~ .site .jp p, input.t
     const hue = ((touch.clientX + touch.clientY) / 3) % 360;
     bloom.style.backgroundColor = `hsl(${hue}, 75%, 50%)`;
     document.body.appendChild(bloom);
-    setTimeout(() => bloom.remove(), 1000); 
+    setTimeout(() => bloom.remove(), 400); 
   });
 </script>
 
